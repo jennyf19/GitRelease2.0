@@ -16,7 +16,6 @@ namespace GitRlease2
         static void Main(string[] args)
         {
             AsyncReleaseMethod();
-
             Console.ReadLine();
 
         }
@@ -30,33 +29,33 @@ namespace GitRlease2
         /// the defaults for both is false. 
         /// </summary>
         public static async void AsyncReleaseMethod()
-        { 
-           
-
+        {
             //A plain GitHubClient is created. You can use the default string for ProduceHeaderValue or enter your own.
             var client = new GitHubClient(new ProductHeaderValue("DevexGitRelease"));
 
             //Enter a personal access token for the repo you want to release.
-            var tokenAuth = new Credentials("d61ea7300584e6b22656b6892b8499d7884d0ea6");
+            var tokenAuth = new Credentials("");
 
             client.Credentials = tokenAuth;
 
-            Repository result = await client.Repository.Get("Jennyf19", "KalAcademyRotatedArray");
-            Console.WriteLine(result.Id);
-            Console.WriteLine(result.GitUrl);
-            Console.WriteLine(result.FullName);
-            Console.WriteLine(result.StargazersCount);
-            Console.WriteLine(result.Url);
+            //Enter ("GitHub Account Name", "Repo Name", and "Tag Name or Version Number (v1.0.0)" for the release)
+            string gitHubAccountName = "Jennyf19";
+            string repoName = "Calculator";
+            string tagName = "v1.2.0";
+            Repository result = await client.Repository.Get(gitHubAccountName, repoName);
+            Console.WriteLine("The Repo Id is: " + result.Id);
+            Console.WriteLine("The GitURL for the repo is: " + result.GitUrl);
+
             #region Create Tag
             //Enter the name of the repo to be released
-            var newRelease = new NewRelease("KalAcademyRotatedArray");
+            var newRelease = new NewRelease(tagName);
 
             //Enter the name of the release
             newRelease.Name = "Big Cat Adventure";
 
             //Include any information you would like to share with the user in the markdown
             newRelease.Body = "This is the markdown";
-            
+
             //The Draft plag is used to indicate when a release should be published
             newRelease.Draft = false;
 
@@ -67,30 +66,20 @@ namespace GitRlease2
 
             #region The Release
 
-            ///To create a new release, you must have a corresponding tag in the repository
+            ///To create a new release, you must have a corresponding tag for the repo
+
             var newReleaseResult = await client.Repository.Release.Create(result.Id, newRelease);
 
-            Console.WriteLine("Created release id {0}", newRelease.TagName);
-            
+            Console.WriteLine("Created release tag: {0}", tagName);
+
             var tagsResult = await client.Repository.GetAllTags(result.Id);
+
             var tag = tagsResult.FirstOrDefault();
 
             NewRelease data = newRelease;
-            //NewRelease data = new NewRelease("test");
-            Release releaseResult;
-            try
-            {
-                var releases = await client.Repository.Release.GetAll(result.Id);
 
-                releaseResult = await client.Repository.Release.Create(result.Id, data);
-            }
-            catch (NotFoundException e)
-            {
-                Console.WriteLine("Not found exception");
-            }
+            Console.WriteLine("Release of " + repoName + " complete");
 
-
-            Console.WriteLine("All done.");
             Console.ReadLine();
         }
         #endregion
