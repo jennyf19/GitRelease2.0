@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitRelease2.0", "GitRelease2.0\GitRelease2.0.csproj", "{C5246C19-CAE4-41BF-9FCB-21FE409791B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitRelease2.0.0", "GitRelease2.0\GitRelease2.0.0.csproj", "{C5246C19-CAE4-41BF-9FCB-21FE409791B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
